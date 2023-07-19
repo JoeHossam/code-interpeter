@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import express from 'express';
 import WebSocket from 'ws';
 import { createAndRunContainer, runPythonCode } from './utils/Docker';
+import internal from 'stream';
 
 const app = express();
 
@@ -10,6 +11,11 @@ app.use(express.static('public'));
 const wss = new WebSocket.Server({
     port: 3001,
 });
+
+const containerStreams: {[key in string]: internal.Duplex} = {}
+export const getContainerStream = (containerId: string) => containerStreams[containerId];
+export const setContainerStream = (containerId: string, stream: internal.Duplex) => containerStreams[containerId] = stream;
+export const removerContainerStream = (containerId: string) => delete containerStreams[containerId];
 
 // this callback function is called on every new socket connection
 wss.on('connection', (socket) => {
@@ -20,21 +26,36 @@ wss.on('connection', (socket) => {
         // use it in running code,
         // else create a new container and use its id
         const message = JSON.parse(msgBuffer.toString());
+        console.log(message);
 
         if (!message.code) return;
 
-        const container = await createAndRunContainer(message.code);
+        if(message.id) {
+            runPythonCode({
+                containerId: message.id,
+                pythonCode: message.code,
+                onContainerData: (data) => {
+                    socket.send(JSON.stringify({type: 'console', data}));
+                }
+            });
+            return;
+        }
+
+        // socket.send(); start
+        const {container, stream} = await createAndRunContainer();
+
+        socket.send(JSON.stringify({type: 'id', data: container.id}));
 
         // Run the Python code in the container
-        // await runPythonCode(container.id, message.code);
+        await runPythonCode({
+            containerId: container.id,
+            pythonCode: message.code,
+            onContainerData: (data) => {
+                socket.send(JSON.stringify({type: 'console', data}));
+            }
+        });
 
-        // await container.exec({
-        //     Cmd: ['python', '-c', message.code],
-        //     AttachStdout: true,
-        //     AttachStderr: true,
-        // })
-
-        console.log({ message: msgBuffer });
+        // socket.send(); end
     });
 });
 

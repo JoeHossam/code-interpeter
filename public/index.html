@@ -6,11 +6,18 @@
     </head>
     <body>
         <div id="code-editor">
-            <button id="run-button">Run</button>
+            <div>
+                <button id="run-button-terminal">Run Terminal</button>
+                <button id="run-button">Run</button>
+            </div>
             <textarea id="code-input">print("hello")
-name = input()</textarea>
+name = input()
+print(name)</textarea>
         </div>
-        <div id="output-panel"></div>
+        <div id="output-panel">
+            <textarea id="terminal" readonly></textarea>
+            <textarea id="terminal-input"></textarea>
+        </div>
         <script src="index.js"></script>
     </body>
 </html>
