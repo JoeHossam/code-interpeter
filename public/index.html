@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Online Compiler</title>
+        <title>Code Interpeter</title>
         <link rel="stylesheet" href="index.css" />
     </head>
     <body>
         <div id="code-editor">
             <div>
-                <button id="run-button-terminal">Run Terminal</button>
-                <button id="run-button">Run</button>
+                <div style="display: flex;">
+                    <button id="run-button">Run</button>
+                    <button id="clear-console-button">Clear Console</button>
+                </div>
             </div>
-            <textarea id="code-input">print("hello")
-name = input()
-print(name)</textarea>
+            <textarea id="code-input">print("hello")</textarea>
         </div>
         <div id="output-panel">
-            <textarea id="terminal" readonly></textarea>
-            <textarea id="terminal-input"></textarea>
+            <!-- <textarea id="terminal" readonly></textarea>0
+            <textarea id="terminal-input"></textarea> -->
+            <div class="terminal">
+                <pre id="output"><span id="terminal-input-same-line" contenteditable="true"></span></pre>
+                <!-- <div class="input-line">
+                <span class="prompt">$</span>
+                <input type="text" id="terminal-input"> -->
+                </div>
+            </div>
         </div>
         <script src="index.js"></script>
     </body>
