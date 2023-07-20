@@ -1,5 +1,6 @@
 # code-interpeter
-The main point from this app is to have a server than runs code on docker containers, handling stdin and stdout with a browser using a socket connection
+The main point from this app is to have a server than runs code on docker containers.
+Any client can communicatie and request to run code with the server with a socket connection, streaming input and output to container to fully interact with the code
 
 ## To run the app follow the following instructions
 - run `npm i`
