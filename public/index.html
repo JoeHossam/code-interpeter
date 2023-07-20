@@ -12,7 +12,20 @@
                     <button id="clear-console-button">Clear Console</button>
                 </div>
             </div>
-            <textarea id="code-input">print("hello")</textarea>
+            <textarea id="code-input">
+from time import sleep
+
+print("Enter your name: ", end="")
+name=input()
+print("How many times to print your name: ",  end="")
+amount=input()
+print("Time interval between each print: ", end="")
+interval=input()
+
+for i in range(int(amount)):
+    print(i+1, ". " + name)
+    sleep(float(interval))
+            </textarea>
         </div>
         <div id="output-panel">
             <!-- <textarea id="terminal" readonly></textarea>0
