@@ -54,6 +54,7 @@ function createAndStartExcutable(container, pythonCode) {
             AttachStdout: true,
             AttachStdin: true,
             AttachStderr: true,
+            Tty: true,
         });
         const stream = yield exec.start({ stdin: true, hijack: true, Tty: true });
         return stream;

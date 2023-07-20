@@ -1,4 +1,4 @@
-const SOCKET_URL = `ws://localhost:3001`;
+const SOCKET_URL = `ws://${window.location.hostname}:3001`;
 
 const runButton = document.getElementById('run-button');
 const clearButton = document.getElementById('clear-console-button');

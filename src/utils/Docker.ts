@@ -61,6 +61,7 @@ async function createAndStartExcutable(
         AttachStdout: true,
         AttachStdin: true,
         AttachStderr: true,
+        Tty: true,
     });
 
     const stream = await exec.start({ stdin: true, hijack: true, Tty: true });
