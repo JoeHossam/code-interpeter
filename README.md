@@ -1,4 +1,6 @@
 # code-interpeter
+> excute python (or any) code on docker containers
+
 The main point from this app is to have a server than runs code on docker containers.
 Any client can communicatie and request to run code with the server with a socket connection, streaming input and output to the container to fully interact with the code
 
